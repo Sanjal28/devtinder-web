@@ -8,6 +8,7 @@ import { BASE_URL } from "../constants.js";
 function Login() {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
+  const [error,setError]=useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // function to handle login
@@ -26,7 +27,7 @@ function Login() {
       }
       navigate("/");
     } catch (err) {
-      console.log(err);
+      setError(err.response?.data||"Something went wrong!");
     }
   };
 
@@ -58,7 +59,10 @@ function Login() {
                 <input
                   type="email"
                   value={emailId}
-                  onChange={(e) => setEmailId(e.target.value)}
+                  onChange={(e) => {
+                    setEmailId(e.target.value);
+                    setError("");
+                  }}
                   placeholder="Enter Your Email ID"
                   required
                 />
@@ -89,7 +93,10 @@ function Login() {
             <input
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setError("");
+              }}
               required
               placeholder="Password"
               minLength="8"
@@ -106,6 +113,7 @@ function Login() {
             <br />
             At least one uppercase letter
           </p>
+          <p className="text-red-600">{error}</p>
           <div className="card-actions justify-center my-2">
             <button className="btn" onClick={handleLogin}>
               Login
