@@ -9,9 +9,9 @@ const EditProfile = ({ user }) => {
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [photoUrl, setPhotoUrl] = useState(user.photoUrl);
-  const [age, setAge] = useState(user.age);
-  const [about, setAbout] = useState(user.about);
-  const [gender, setGender] = useState(user.gender);
+  const [age, setAge] = useState(user.age || "");
+  const [about, setAbout] = useState(user.about || "");
+  const [gender, setGender] = useState(user.gender || "");
   const [error, setError] = useState("");
   const [showMsg,setShowMsg]=useState(false);
   const dispatch = useDispatch();
@@ -93,9 +93,9 @@ const EditProfile = ({ user }) => {
                 className="w-full p-2 mt-1 bg-gray-700 rounded"
               >
                 <option value="">Select</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
               </select>
             </div>
             <div>

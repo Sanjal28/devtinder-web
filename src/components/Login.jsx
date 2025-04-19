@@ -8,6 +8,9 @@ import { BASE_URL } from "../constants.js";
 function Login() {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName,setFirstName]=useState("");
+  const [lastName,setLastName]=useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error,setError]=useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -30,12 +33,72 @@ function Login() {
       setError(err.response?.data||"Something went wrong!");
     }
   };
+  const handleSignUp = async () => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/signup",
+        {
+          firstName,
+          lastName,
+          emailId,
+          password,
+        },
+        { withCredentials: true }
+      );
+      if (res.status === 200) {
+        dispatch(addUser(res.data));
+      }
+      navigate("/profile");
+    } catch (err) {
+      setError(err.response?.data||"Something went wrong!");
+    }
+  };
 
   return (
     <div className="flex justify-center">
       <div className="card bg-gray-700 text-primary-content w-96">
         <div className="card-body">
-          <h2 className="card-title justify-center">Login</h2>
+          <h2 className="card-title justify-center">{isLoggedIn?"Login":"Sign Up"}</h2>
+         {!isLoggedIn && <>
+          {/* First Name */}
+          <div className="join flex flex-col">
+            <div>
+              <label className="input  join-item">
+                
+                <input
+                  type="email"
+                  value={firstName}
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                    setError("");
+                  }}
+                  placeholder="Enter Your First Name"
+                  required
+                />
+              </label>
+              
+            </div>
+          </div>
+          {/* Second Name */}
+          <div className="join flex flex-col">
+            <div>
+              <label className="input  join-item">
+                
+                <input
+                  type="email"
+                  value={lastName}
+                  onChange={(e) => {
+                    setLastName(e.target.value);
+                    setError("");
+                  }}
+                  placeholder="Enter Your Last Name"
+                  required
+                />
+              </label>
+              
+            </div>
+          </div>
+          </>}
           {/* mail input field */}
           <div className="join flex flex-col">
             <div>
@@ -115,10 +178,11 @@ function Login() {
           </p>
           <p className="text-red-600">{error}</p>
           <div className="card-actions justify-center my-2">
-            <button className="btn" onClick={handleLogin}>
-              Login
+            <button className="btn" onClick={isLoggedIn? handleLogin:handleSignUp}>
+            {isLoggedIn?"Login":"Sign Up"}
             </button>
           </div>
+          <p className="text-center cursor-pointer" onClick={()=>setIsLoggedIn((value)=>!value)}>{isLoggedIn?"New User? Sign Up Here":"Existing User? Login Here"}</p>
         </div>
       </div>
     </div>
