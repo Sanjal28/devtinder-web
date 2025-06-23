@@ -6,7 +6,7 @@ This repository contains the React.js frontend application for **devTinder**, a 
 
 - Responsive and clean UI built with React.js, Tailwind CSS, and Redux Toolkit  
 - User authentication with JWT-based secure login/signup  
-- Real-time messaging, profile management, and connection requests  
+- Real-time profile management, and connection requests  
 - Integration with backend RESTful APIs for seamless data flow
 
 ## Tech Stack
